@@ -125,6 +125,8 @@ else
 fi
 
 # Restart LightDM or system for changes to take effect
+echo" If this is your initial installation of the VDI client, Please wait to restart the client"
+echo" You will need to Cat the contents of the newly created "license.txt" file from the client device and manually open the vdiclient.py file and register the gui backend"
 read -p "Configuration complete. Do you want to restart the system now? (y/n): " RESTART
 if [[ "$RESTART" =~ ^[Yy]$ ]]; then
   echo "Restarting the system..."
