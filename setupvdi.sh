@@ -114,7 +114,7 @@ echo "Configuring LightDM for autologin..."
   echo "autologin-user-timeout=0"
   echo "xserver-command=X -s 0 -dpms"
 
-
+  
 } >"$LIGHTDM_CONF"
 # Confirm changes
 if [ $? -eq 0 ]; then
@@ -137,3 +137,7 @@ exit 0
 
 
 echo "Setup complete! Reboot the system for changes to take effect."
+
+
+
+
