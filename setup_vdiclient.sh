@@ -112,9 +112,10 @@ echo "Configuring LightDM for autologin..."
   echo "[Seat:*]"
   echo "autologin-user=$USERNAME"
   echo "autologin-user-timeout=0"
+  echo "xserver-command=X -s 0 -dpms"
+
   
 } >"$LIGHTDM_CONF"
-
 # Confirm changes
 if [ $? -eq 0 ]; then
   echo "LightDM autologin configured successfully for $USERNAME."
@@ -127,7 +128,7 @@ fi
 read -p "Configuration complete. Do you want to restart the system now? (y/n): " RESTART
 if [[ "$RESTART" =~ ^[Yy]$ ]]; then
   echo "Restarting the system..."
-  reboot
+  sudo reboot
 else
   echo "Please reboot the system manually to apply changes."
 fi
