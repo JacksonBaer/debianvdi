@@ -8,7 +8,11 @@
 LOGFILE="/var/log/thin_client_maintenance.log"
 
 echo "Thin Client Maintenance Script Started on $(date)" | tee -a $LOGFILE
-
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  echo "Failed Authentification: Was not run as root" | tee -a $LOGFILE
+  exit
+fi
 # Update and Upgrade System
 echo "Updating and upgrading system..." | tee -a $LOGFILE
 sudo apt-get update -y >> $LOGFILE 2>&1
