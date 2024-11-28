@@ -1,0 +1,19 @@
+cd debianvdi/
+chmod +x setupvdi.sh autostartxde.sh
+sed -i 's/\r$//' setupvdi.sh
+sed -i 's/\r$//' autostartlxde.sh
+
+sudo ./setupvdi
+
+Enter proxmox ip
+Enter Proxmox Vdi Title
+
+cat license.txt
+copy contents to clipboard
+
+python3 PVE-VDIClient/vdiclient.py
+
+paste in key and vdi client should open 
+
+sudo autostartlxde.sh
+(The autostart LXDE root requirment is not required but this script will reboot your machine)
