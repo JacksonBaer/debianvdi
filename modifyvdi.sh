@@ -17,12 +17,16 @@ read -p "Enter the Thin Client Title: " VDI_TITLE
 #Prompt For Authentification Method for client
 read -p "Enter Your Preferred Authentication Method {PVE, PAM}: " VDI_AUTH
  
-if [ "$VDI_AUTH" == "PVE" ] || [ "$VDI_AUTH" == "PAM" ]; then
-    echo "You selected $VDI_AUTH authentication."
-else
-    echo "Error: Invalid input. Please enter 'PVE' or 'PAM'."
-    exit 1  # Exit the script with an error code
-fi
+while true; do
+    read -p "Enter authentication type (PVE or PAM): " VDI_AUTH
+    if [ "$VDI_AUTH" == "PVE" ] || [ "$VDI_AUTH" == "PAM" ]; then
+        echo "You selected $VDI_AUTH authentication."
+        break  # Exit the loop when a valid input is provided
+    else
+        echo "Error: Invalid input. Please enter 'PVE' or 'PAM'."
+    fi
+done
+
 # Create the configuration directory and file
 echo "Setting up configuration..."
 # Create the configuration directory and file
