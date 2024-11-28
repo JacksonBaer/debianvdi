@@ -1,3 +1,5 @@
+This should be done from the client itself as opposed to the SSH session for ease of use
+
 cd debianvdi/
 chmod +x setupvdi.sh autostartxde.sh
 sed -i 's/\r$//' setupvdi.sh
