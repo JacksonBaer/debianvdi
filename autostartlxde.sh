@@ -1,3 +1,9 @@
+#!/bin/bash
+# Thin Client Enable on Boot
+# Compatible with Debian-based systems
+# Author: Jackson Baer
+# Date: 27 Nov 2024
+
 # Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"

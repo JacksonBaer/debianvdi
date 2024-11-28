@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# Thin Client Setup
+# Compatible with Debian-based systems
+# Author: Jackson Baer
+# Date: 27 Nov 2024
 # Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"
@@ -125,7 +128,7 @@ else
   exit 1
 fi
 
-# Restart LightDM or system for changes to take effect
+# Restart client for changes to take effect
 echo " If this is your initial installation of the VDI client, Please wait to restart the client"
 echo " You will need to Cat the contents of the newly created "license.txt" file from the client device and manually open the vdiclient.py file and register the gui backend"
 read -p "Configuration complete. Do you want to restart the system now? (y/n): " RESTART

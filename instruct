@@ -2,8 +2,7 @@ This should be done from the client itself as opposed to the SSH session for eas
 
 cd debianvdi/
 chmod +x setupvdi.sh autostartxde.sh
-sed -i 's/\r$//' setupvdi.sh
-sed -i 's/\r$//' autostartlxde.sh
+
 
 sudo ./setupvdi
 
