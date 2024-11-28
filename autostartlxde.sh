@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Add the required line to the user's autostart file
-echo "@/usr/bin/bash /home/vdiuser/thinclient" > ~/.config/lxsession/LXDE/autostart
+echo "@/usr/bin/bash /home/vdiuser/thinclient" > /home/vdiuser/.config/lxsession/LXDE/autostart
 
 # Create thin client script
 echo "Creating thinclient script..."
