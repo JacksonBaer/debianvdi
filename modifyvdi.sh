@@ -14,9 +14,20 @@ read -p "Enter the Proxmox IP or DNS name: " PROXMOX_IP
 
 # Prompt for the Thin Client Title
 read -p "Enter the Thin Client Title: " VDI_TITLE
+#Prompt For Authentification Method for client
+read -p "Enter Your Preferred Authentication Method {PVE, PAM}: " VDI_AUTH
+ 
+if [ "$VDI_AUTH" == "PVE" ] || [ "$VDI_AUTH" == "PAM" ]; then
+    echo "You selected $VDI_AUTH authentication."
+else
+    echo "Error: Invalid input. Please enter 'PVE' or 'PAM'."
+    exit 1  # Exit the script with an error code
+fi
 # Create the configuration directory and file
 echo "Setting up configuration..."
-sudo mkdir -p /etc/vdiclient
+# Create the configuration directory and file
+echo "Setting up configuration..."
+
 sudo tee /etc/vdiclient/vdiclient.ini > /dev/null <<EOL
 [General]
 
@@ -26,13 +37,14 @@ logo=vdilogo.png
 kiosk=false
 
 [Authentication]
-auth_backend=pve
+auth_backend=$VDI_AUTH
 auth_totp=false
 tls_verify=false
 
 [Hosts]
 $PROXMOX_IP=8006
 EOL
+
 
 echo " If this is your initial installation of the VDI client, Please wait to restart the client"
 echo " You will need to Cat the contents of the newly created "license.txt" file from the client device and manually open the vdiclient.py file and register the gui backend"
