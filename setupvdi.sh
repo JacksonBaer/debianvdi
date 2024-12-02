@@ -4,8 +4,11 @@
 # Author: Jackson Baer
 # Date: 27 Nov 2024
 # Ensure the script is run as root
+echo "$(date): Starting Thin Client Setup script" >> /var/log/thinclient_setup.log
+
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"
+  echo "$(date): User ID is $EUID. Exiting if not root." >> /var/log/thinclient_setup.log
   exit
 fi
 
@@ -25,7 +28,12 @@ while true; do
     fi
 done
 
+echo "$(date): Proxmox IP/DNS entered: $PROXMOX_IP" >> /var/log/thinclient_setup.log
+echo "$(date): Thin Client Title entered: $VDI_TITLE" >> /var/log/thinclient_setup.log
+echo "$(date): Authentication type selected: $VDI_AUTH" >> /var/log/thinclient_setup.log
+
 # Update and upgrade system
+echo "$(date): Updating and upgrading system packages..." >> /var/log/thinclient_setup.log
 echo "Updating and upgrading system..."
 sudo apt update && sudo apt upgrade -y
 
@@ -35,6 +43,8 @@ echo "ePy6JrMIatWENTlUbYnrNIleVGHIlEw4ZySqIB6ZI5kgRMlrdvm0VusMbA3XBiltcXi5ITsMIX
 
 # Install required packages
 echo "Installing required dependencies..."
+echo "$(date): Installing required dependencies..." >> /var/log/thinclient_setup.log
+
 sudo apt install python3-pip  virt-viewer git lxde lightdm lightdm-gtk-greeter -y
 sudo apt install python3-tk -y
 # Install Python dependencies
@@ -44,6 +54,7 @@ pip3 install proxmoxer PySimpleGUIQt PySimpleGUI
 # Clone the repository and navigate into it
 echo "Cloning PVE-VDIClient repository..."
 cd /home/vdiuser
+echo "$(date): Cloning PVE-VDIClient repository..." >> /var/log/thinclient_setup.log
 git clone https://github.com/joshpatten/PVE-VDIClient.git
 cd ./PVE-VDIClient || { echo "Failed to change directory to PVE-VDIClient"; exit 1; }
 
@@ -53,6 +64,7 @@ chmod +x vdiclient.py
 
 # Create the configuration directory and file
 echo "Setting up configuration..."
+echo "$(date): Creating vdiclient configuration file..." >> /var/log/thinclient_setup.log
 sudo mkdir -p /etc/vdiclient
 sudo tee /etc/vdiclient/vdiclient.ini > /dev/null <<EOL
 [General]
@@ -73,6 +85,7 @@ EOL
 
 # Copy vdiclient.py to /usr/local/bin
 echo "Copying vdiclient.py to /usr/local/bin..."
+echo "$(date): Copying vdiclient.py to /usr/local/bin..." >> /var/log/thinclient_setup.log
 sudo cp vdiclient.py /usr/local/bin/vdiclient
 
 # Copy optional images
@@ -122,6 +135,8 @@ fi
 LIGHTDM_CONF="/etc/lightdm/lightdm.conf"
 
 echo "Configuring LightDM for autologin..."
+echo "$(date): Configuring LightDM autologin for $USERNAME" >> /var/log/thinclient_setup.log
+
 {
   echo "[Seat:*]"
   echo "autologin-user=$USERNAME"
@@ -133,6 +148,8 @@ echo "Configuring LightDM for autologin..."
 # Confirm changes
 if [ $? -eq 0 ]; then
   echo "LightDM autologin configured successfully for $USERNAME."
+  echo "$(date): Checking existence of user $USERNAME..." >> /var/log/thinclient_setup.log
+
 else
   echo "Failed to configure LightDM autologin."
   exit 1
