@@ -5,14 +5,30 @@
 # Author: Jackson Baer
 # Date: 27 Nov 2024
 
-LOGFILE="/var/log/thin_client_maintenance.log"
+#Establishes Log File
+LOG_FILE="/var/log/thinclient_setup.log"
 
-echo "Thin Client Maintenance Script Started on $(date)" | tee -a $LOGFILE
+log_event() {
+    echo "$(date): $1" >> /var/log/thinclient_setup.log
+}
+
+# Ensure the log file exists
+if [ ! -f "$LOG_FILE" ]; then
+    touch "$LOG_FILE"
+     log_event "Log file created."
+fi
+
+
+log_event "Starting Thin Client Service script"
+
+
+# Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"
-  echo "Failed Authentification: Was not run as root" >> $LOGFILE
+  log_event "User ID is $EUID. Exiting if not root."
   exit
 fi
+
 # Update and Upgrade System
 echo "Updating and upgrading system..." | tee -a $LOGFILE
 sudo apt-get update -y >> $LOGFILE 2>&1

@@ -3,11 +3,31 @@
 # Compatible with Debian-based systems
 # Author: Jackson Baer
 # Date: 27 Nov 2024
+
+#Establishes Log File
+LOG_FILE="/var/log/thinclient_setup.log"
+
+#Create Log_Event Function for log functions
+log_event() {
+    echo "$(date): $1" >> /var/log/thinclient_setup.log
+}
+
+# Ensure the log file exists
+if [ ! -f "$LOG_FILE" ]; then
+    touch "$LOG_FILE"
+     log_event "Log file created."
+fi
+
+log_event "Starting Modift Thin Client  script"
+
+
 # Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"
+  log_event "User ID is $EUID. Exiting if not root."
   exit
 fi
+
 
 # Prompt for the Proxmox IP or DNS name
 read -p "Enter the Proxmox IP or DNS name: " PROXMOX_IP
@@ -27,10 +47,11 @@ while true; do
     fi
 done
 
-# Create the configuration directory and file
-echo "Setting up configuration..."
-# Create the configuration directory and file
-echo "Setting up configuration..."
+#Logging User Inputs
+log_event "Proxmox Ip Address: $PROXMOX_IP, Thin Client Title: $VDI_TITLE, Authentification Method: $VDI_AUTH "
+
+# Modify the configuration directory and file
+echo "Modifying configuration..."
 
 sudo tee /etc/vdiclient/vdiclient.ini > /dev/null <<EOL
 [General]
@@ -50,8 +71,6 @@ $PROXMOX_IP=8006
 EOL
 
 
-echo " If this is your initial installation of the VDI client, Please wait to restart the client"
-echo " You will need to Cat the contents of the newly created "license.txt" file from the client device and manually open the vdiclient.py file and register the gui backend"
 read -p "Configuration complete. Do you want to restart the system now? (y/n): " RESTART
 if [[ "$RESTART" =~ ^[Yy]$ ]]; then
   echo "Restarting the system..."
@@ -59,3 +78,5 @@ if [[ "$RESTART" =~ ^[Yy]$ ]]; then
 else
   echo "Please reboot the system manually to apply changes."
 fi
+
+

@@ -7,18 +7,23 @@
 #Establishes Log File
 LOG_FILE="/var/log/thinclient_setup.log"
 
+log_event() {
+    echo "$(date): $1" >> /var/log/thinclient_setup.log
+}
+
 # Ensure the log file exists
 if [ ! -f "$LOG_FILE" ]; then
     touch "$LOG_FILE"
-    echo "$(date): Log file created." >> "$LOG_FILE"
+     log_event "Log file created."
 fi
-echo "$(date): Starting Thin Client Setup script" >> $LOG_FILE
+
+log_event "Starting Thin Client Setup script"
 
 
 # Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"
-  echo "$(date): User ID is $EUID. Exiting if not root." >> $LOG_FILE
+  log_event "User ID is $EUID. Exiting if not root."
   exit
 fi
 
@@ -165,18 +170,25 @@ else
   exit 1
 fi
 
-# Restart client for changes to take effect
-echo " If this is your initial installation of the VDI client, Please wait to restart the client"
-echo " You will need to Cat the contents of the newly created "license.txt" file from the client device and manually open the vdiclient.py file and register the gui backend"
-read -p "Configuration complete. Do you want to restart the system now? (y/n): " RESTART
-if [[ "$RESTART" =~ ^[Yy]$ ]]; then
-  echo "Restarting the system..."
-  sudo reboot
-else
-  echo "Please reboot the system manually to apply changes."
-fi
+echo "Making Management Scripts executable"
+log_event "Making Management Scripts executable"
+chmod +x autostartlxde.sh service_client.sh modifyvdi.sh
 
-exit 0
+
+echo "Please copy the contents of the 'license.txt' file to your clipboard then manually run the thinclient python Script"
+echo "python3 PVE-VDIClient/vdiclient.py and paste in the license key before running the autostartlxde.sh script"
+# # Restart client for changes to take effect
+# echo " If this is your initial installation of the VDI client, Please wait to restart the client"
+# echo " You will need to Cat the contents of the newly created "license.txt" file from the client device and manually open the vdiclient.py file and register the gui backend"
+# read -p "Configuration complete. Do you want to restart the system now? (y/n): " RESTART
+# if [[ "$RESTART" =~ ^[Yy]$ ]]; then
+#   echo "Restarting the system..."
+#   sudo reboot
+# else
+#   echo "Please reboot the system manually to apply changes."
+# fi
+
+# exit 0
 
 
 echo "Setup complete! Reboot the system for changes to take effect."
