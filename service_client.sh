@@ -30,50 +30,58 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Update and Upgrade System
-echo "Updating and upgrading system..." | tee -a $LOGFILE
+echo "Updating and upgrading system..."
+log_event "Updating and upgrading system..."
 sudo apt-get update -y >> $LOGFILE 2>&1
 sudo apt-get upgrade -y >> $LOGFILE 2>&1
-echo "System update and upgrade completed." | tee -a $LOGFILE
+echo "System update and upgrade completed." 
+log_event "System update and upgrade completed." 
 
 # Clean Up Unused Packages
-echo "Cleaning up unused packages and cache..." | tee -a $LOGFILE
+echo "Cleaning up unused packages and cache..."
+log_event "Cleaning up unused packages and cache..."
 sudo apt-get autoremove -y >> $LOGFILE 2>&1
 sudo apt-get autoclean -y >> $LOGFILE 2>&1
-echo "Cleanup completed." | tee -a $LOGFILE
+echo "Cleanup completed." 
+log_event "Cleanup completed." 
 
 # Check Disk Usage
-echo "Checking disk usage..." | tee -a $LOGFILE
-df -h | tee -a $LOGFILE
+echo "Checking disk usage..." 
+log_event "Checking disk usage..." 
+
+df -h 
 
 # Remove Old Logs
-echo "Rotating and cleaning old logs..." | tee -a $LOGFILE
+echo "Rotating and cleaning old logs..."
+log_event "Rotating and cleaning old logs..."
 sudo logrotate -f /etc/logrotate.conf >> $LOGFILE 2>&1
 find /var/log -type f -name "*.gz" -mtime +30 -exec rm -f {} \; >> $LOGFILE 2>&1
-echo "Log cleanup completed." | tee -a $LOGFILE
+echo "Log cleanup completed." 
 
 # Verify Running Services
-echo "Checking systemd services..." | tee -a $LOGFILE
-sudo systemctl --failed | tee -a $LOGFILE
+echo "Checking systemd services..." 
+sudo systemctl --failed 
 
 # Check Memory Usage
-echo "Checking memory usage..." | tee -a $LOGFILE
-free -h | tee -a $LOGFILE
+echo "Checking memory usage..." 
+free -h 
 
 # Verify Disk Health (Requires `smartmontools`)
 if command -v smartctl &> /dev/null; then
-    echo "Running disk health check..." | tee -a $LOGFILE
-    sudo smartctl -H /dev/sda | tee -a $LOGFILE
+    echo "Running disk health check..." 
+    sudo smartctl -H /dev/sda 
 else
-    echo "smartctl not installed. Skipping disk health check." | tee -a $LOGFILE
+    echo "smartctl not installed. Skipping disk health check."
+    log_event "smartctl not installed. Skipping disk health check."
 fi
 
 # Reboot Recommendation if Needed
-echo "Checking if reboot is required..." | tee -a $LOGFILE
+echo "Checking if reboot is required..." 
 if [ -f /var/run/reboot-required ]; then
-    echo "Reboot required. Please reboot the system." | tee -a $LOGFILE
+    echo "Reboot required. Please reboot the system." 
 else
-    echo "No reboot required." | tee -a $LOGFILE
+    echo "No reboot required." 
 fi
 
 # End of Script
-echo "Thin Client Maintenance Script Completed on $(date)" | tee -a $LOGFILE
+echo "Thin Client Maintenance Script Completed on $(date)" 
