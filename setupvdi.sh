@@ -8,8 +8,9 @@
 LOG_FILE="/var/log/thinclient_setup.log"
 
 log_event() {
-    echo "$(date): $1" >> /var/log/thinclient_setup.log
+    echo "$(date) [$(hostname)] [User: $(whoami)]: $1" >> /var/log/thinclient_setup.log
 }
+
 
 # Ensure the log file exists
 if [ ! -f "$LOG_FILE" ]; then
@@ -43,12 +44,13 @@ while true; do
     fi
 done
 
-echo "$(date): Proxmox IP/DNS entered: $PROXMOX_IP" >> $LOG_FILE
-echo "$(date): Thin Client Title entered: $VDI_TITLE" >> $LOG_FILE
-echo "$(date): Authentication type selected: $VDI_AUTH" >> $LOG_FILE
+log_event  "Proxmox IP/DNS entered: $PROXMOX_IP"
+log_event  "Thin Client Title entered: $VDI_TITLE"
+log_event "Authentication type selected: $VDI_AUTH"
 
 # Update and upgrade system
-echo "$(date): Updating and upgrading system packages..." >> $LOG_FILE
+echo "Updating and upgrading system packages"
+log_event "Updating and upgrading system packages"
 echo "Updating and upgrading system..."
 sudo apt update && sudo apt upgrade -y
 
@@ -68,8 +70,9 @@ pip3 install proxmoxer PySimpleGUIQt PySimpleGUI
 
 # Clone the repository and navigate into it
 echo "Cloning PVE-VDIClient repository..."
+log_event "Cloning PVE-VDIClient repository..."
+
 cd /home/vdiuser
-echo "$(date): Cloning PVE-VDIClient repository..." >> $LOG_FILE
 git clone https://github.com/joshpatten/PVE-VDIClient.git
 cd ./PVE-VDIClient || { echo "Failed to change directory to PVE-VDIClient"; exit 1; }
 
@@ -79,7 +82,9 @@ chmod +x vdiclient.py
 
 # Create the configuration directory and file
 echo "Setting up configuration..."
-echo "$(date): Creating vdiclient configuration file..." >> $LOG_FILE
+echo "Creating vdiclient configuration file"
+log_event "Creating vdiclient configuration file"
+
 sudo mkdir -p /etc/vdiclient
 sudo tee /etc/vdiclient/vdiclient.ini > /dev/null <<EOL
 [General]
