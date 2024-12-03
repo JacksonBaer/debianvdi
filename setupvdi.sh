@@ -172,7 +172,7 @@ fi
 
 echo "Making Management Scripts executable"
 log_event "Making Management Scripts executable"
-chmod +x autostartlxde.sh service_client.sh modifyvdi.sh
+sudo chmod +x debianvdi/autostartlxde.sh debianvdi/service_client.sh debianvdi/modifyvdi.sh
 
 
 echo "Please copy the contents of the 'license.txt' file to your clipboard then manually run the thinclient python Script"
