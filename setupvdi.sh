@@ -168,7 +168,7 @@ echo "$(date): Configuring LightDM autologin for $USERNAME" >> $LOG_FILE
 # Confirm changes
 if [ $? -eq 0 ]; then
   echo "LightDM autologin configured successfully for $USERNAME."
-  echo "$(date): Checking existence of user $USERNAME..." >> $LOG_FILE
+  log_event "$(date): Checking existence of user $USERNAME"
 
 else
   echo "Failed to configure LightDM autologin."
@@ -177,11 +177,12 @@ fi
 
 echo "Making Management Scripts executable"
 log_event "Making Management Scripts executable"
-sudo chmod +x debianvdi/autostartlxde.sh debianvdi/service_client.sh debianvdi/modifyvdi.sh
+chmod +x debianvdi/autostartlxde.sh debianvdi/service_client.sh debianvdi/modifyvdi.sh
 
 
 echo "Please copy the contents of the 'license.txt' file to your clipboard then manually run the thinclient python Script"
 echo "python3 PVE-VDIClient/vdiclient.py and paste in the license key before running the autostartlxde.sh script"
+
 # # Restart client for changes to take effect
 # echo " If this is your initial installation of the VDI client, Please wait to restart the client"
 # echo " You will need to Cat the contents of the newly created "license.txt" file from the client device and manually open the vdiclient.py file and register the gui backend"
