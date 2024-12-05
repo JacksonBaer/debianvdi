@@ -38,8 +38,8 @@ read -p "Enter the Thin Client Title: " VDI_TITLE
 read -p "Enter Your Preferred Authentication Method {PVE, PAM}: " VDI_AUTH
  
 while true; do
-    read -p "Enter authentication type (PVE or PAM): " VDI_AUTH
-    if [ "$VDI_AUTH" == "PVE" ] || [ "$VDI_AUTH" == "PAM" ]; then
+    read -p "Enter authentication type (pve or pam): " VDI_AUTH
+    if [ "$VDI_AUTH" == "pve" ] || [ "$VDI_AUTH" == "pam" ]; then
         echo "You selected $VDI_AUTH authentication."
         break  # Exit the loop when a valid input is provided
     else

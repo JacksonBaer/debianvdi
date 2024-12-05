@@ -46,7 +46,7 @@ done
 
 log_event  "Proxmox IP/DNS entered: $PROXMOX_IP"
 log_event  "Thin Client Title entered: $VDI_TITLE"
-log_event "Authentication type selected: $VDI_AUTH"
+#log_event "Authentication type selected: $VDI_AUTH"
 
 # Update and upgrade system
 echo "Updating and upgrading system packages"
