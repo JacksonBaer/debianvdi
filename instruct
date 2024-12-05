@@ -1,20 +1,38 @@
-This should be done from the client itself as opposed to the SSH session for ease of use
+Install Debian with user "vdiuser" , add a network mirror and ensure you unselect GNOME and select LXDE and SSH server
+once you are done installing, you will need to log in at root and run
 
-cd debianvdi/
-chmod +x setupvdi.sh autostartxde.sh
+sudo usermod -aG sudo vdiuser
 
+nano /etc/apt/source.list
+    Comment out any "CDROM"
+
+apt install git
+
+run ip a (to get your machines IP)
+
+ssh into the machine as vdiuser (ssh vdiuser@<ip>) and run
+
+#This command will git clone required scripts, change into the downloaded directory, and makes the scripts executable
+git clone https://github.com/JacksonBaer/debianvdi.git && cd debianvdi/ && chmod +x setupvdi.sh autostartlxde.sh modifyvdi.sh service_client.sh
+
+# cd debianvdi/
+# chmod +x setupvdi.sh autostartxde.sh modifyvdi.sh service_client.sh
 
 sudo ./setupvdi
 
 Enter proxmox ip
 Enter Proxmox Vdi Title
+Enter Proxmox Auth Method
+    PVE is a local user ex: User01
+    PAM is a linux user like the "root" account that is created to login to the server
+
+Once the setup is installed ON YOUR PHYSICAL CLIENT AND LOGGED IN AS VDIUSER
 
 cat license.txt
-copy contents to clipboard
+    copy the key to clipboard
 
 python3 PVE-VDIClient/vdiclient.py
-
-paste in key and vdi client should open 
+    paste in key and vdi client should open 
 
 sudo autostartlxde.sh
 (The autostart LXDE root requirment is not required but this script will reboot your machine)

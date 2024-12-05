@@ -46,7 +46,7 @@ done
 
 log_event  "Proxmox IP/DNS entered: $PROXMOX_IP"
 log_event  "Thin Client Title entered: $VDI_TITLE"
-#log_event "Authentication type selected: $VDI_AUTH"
+log_event "Authentication type selected: $VDI_AUTH"
 
 # Update and upgrade system
 echo "Updating and upgrading system packages"
@@ -62,7 +62,7 @@ echo "ePy6JrMIatWENTlUbYnrNIleVGHIlEw4ZySqIB6ZI5kgRMlrdvm0VusMbA3XBiltcXi5ITsMIX
 log_event "Installing required dependencies..."
 echo "$(date): Installing required dependencies..."
 
-sudo apt install python3-pip  virt-viewer git lxde lightdm lightdm-gtk-greeter -y
+sudo apt install python3-pip  virt-viewer lxde lightdm lightdm-gtk-greeter -y
 sudo apt install python3-tk -y
 # Install Python dependencies
 echo "Installing Python dependencies..."
@@ -175,12 +175,12 @@ else
   exit 1
 fi
 
-echo "Making Management Scripts executable"
-log_event "Making Management Scripts executable"
-chmod +x debianvdi/autostartlxde.sh debianvdi/service_client.sh debianvdi/modifyvdi.sh
+# echo "Making Management Scripts executable"
+# log_event "Making Management Scripts executable"
+# chmod +x debianvdi/autostartlxde.sh debianvdi/service_client.sh debianvdi/modifyvdi.sh
 
-
-echo "Please copy the contents of the 'license.txt' file to your clipboard then manually run the thinclient python Script"
+Echo "Setup Script is complete, But don't celebrate yet"
+echo "Please copy the contents of the 'license.txt' file to your clipboard then manually run the thinclient python Script. This needs to be done from your client device"
 echo "python3 PVE-VDIClient/vdiclient.py and paste in the license key before running the autostartlxde.sh script"
 
 # # Restart client for changes to take effect
@@ -193,11 +193,8 @@ echo "python3 PVE-VDIClient/vdiclient.py and paste in the license key before run
 # else
 #   echo "Please reboot the system manually to apply changes."
 # fi
-
 # exit 0
-
-
-echo "Setup complete! Reboot the system for changes to take effect."
+# echo "Setup complete! Reboot the system for changes to take effect."
 
 
 
