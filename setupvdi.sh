@@ -181,7 +181,7 @@ fi
 
 Echo "Setup Script is complete, But don't celebrate yet"
 echo "Please copy the contents of the 'license.txt' file to your clipboard then manually run the thinclient python Script. This needs to be done from your client device"
-echo "python3 PVE-VDIClient/vdiclient.py and paste in the license key before running the autostartlxde.sh script"
+echo "python3 ~/PVE-VDIClient/vdiclient.py and paste in the license key before running the autostartlxde.sh script"
 
 # # Restart client for changes to take effect
 # echo " If this is your initial installation of the VDI client, Please wait to restart the client"
