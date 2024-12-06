@@ -66,7 +66,7 @@ sudo apt install python3-pip  virt-viewer lxde lightdm lightdm-gtk-greeter -y
 sudo apt install python3-tk -y
 # Install Python dependencies
 echo "Installing Python dependencies..."
-pip3 install proxmoxer PySimpleGUIQt PySimpleGUI
+pip3 install proxmoxer "PySimpleGUI<5.0.0"
 
 # Clone the repository and navigate into it
 echo "Cloning PVE-VDIClient repository..."
