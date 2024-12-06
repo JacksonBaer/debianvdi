@@ -3,6 +3,7 @@
 # Compatible with Debian-based systems
 # Author: Jackson Baer
 # Date: 27 Nov 2024
+#git clone https://github.com/JacksonBaer/debianvdi.git && cd debianvdi/ && chmod +x simple_setup.sh
 
 #Establishes Log File
 LOG_FILE="/var/log/thinclient_setup.log"
@@ -93,6 +94,7 @@ title = $VDI_TITLE
 icon=vdiicon.ico
 logo=vdilogo.png
 kiosk=false
+theme=Black2
 
 [Authentication]
 auth_backend=$VDI_AUTH
