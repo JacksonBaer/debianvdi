@@ -13,12 +13,11 @@ run ip a (to get your machines IP)
 ssh into the machine as vdiuser (ssh vdiuser@<ip>) and run
 
 #This command will git clone required scripts, change into the downloaded directory, and makes the scripts executable
-git clone https://github.com/JacksonBaer/debianvdi.git && cd debianvdi/ && chmod +x setupvdi.sh autostartlxde.sh modifyvdi.sh service_client.sh
+git clone https://github.com/JacksonBaer/debianvdi.git && cd debianvdi/ && chmod +x setupvdi.sh autostartlxde.sh modifyvdi.sh service_client.sh 
 
 # cd debianvdi/
 # chmod +x setupvdi.sh autostartxde.sh modifyvdi.sh service_client.sh
-
-sudo ./setupvdi
+# sudo ./setupvdi
 
 Enter proxmox ip
 Enter Proxmox Vdi Title
