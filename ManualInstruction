@@ -25,7 +25,7 @@ Enter Proxmox Auth Method
     PVE is a local user ex: User01
     PAM is a linux user like the "root" account that is created to login to the server
 
-Once the setup is installed ON YOUR PHYSICAL CLIENT AND LOGGED IN AS VDIUSER
+
 
 cat license.txt
     copy the key to clipboard
